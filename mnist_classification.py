@@ -16,34 +16,57 @@ def main():
   #--- Build model
   model = build_model()
 
-  #--- Compile model with Adam optimizer and MSE loss
-  model.compile(optimizer='adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
-
+  #--- Compile model with Adam optimizer and categorical crossentropy loss
+  model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
   #--- Load data
-  (trainX, trainY),(testX, testY) = load_data()
-	
-  #--- Cross-check 
+  (trainX, trainY), (testX, testY) = load_data()
+
+  #--- Cross-check
   print(trainX.shape, trainY.shape)
   print(testX.shape, testY.shape)
+
+  #--- Normalize and one-hot encode
   trainX = trainX.astype('float32') / 255.0
   testX = testX.astype('float32') / 255.0
   trainY = to_categorical(trainY, num_classes=10)
   testY = to_categorical(testY, num_classes=10)
 
   #--- Train model
-  history = model.fit(trainX, trainY, validation_split = 0.1, epochs = 10)
+  history = model.fit(trainX, trainY, validation_split=0.1, epochs=10)
 
-  #--- Predict on test data
-  
-  history = model.evaluate(testX, testY)
-  
-  plt.figure(figsize = (20,20))
-  plt.subplot(2,1,1)
-  plt.plot()
+  #--- Evaluate on test data
+  test_loss, test_acc = model.evaluate(testX, testY)
+  print(f"\nTest Accuracy: {test_acc:.4f} | Test Loss: {test_loss:.4f}")
 
+  #--- Plot training history
+  plot_history(history)
 
 
+#======================= Visualization =========================
+def plot_history(history):
+    plt.figure(figsize=(12, 5))
+
+    # Accuracy plot
+    plt.subplot(1, 2, 1)
+    plt.plot(history.history['accuracy'], label='Train Acc')
+    plt.plot(history.history['val_accuracy'], label='Val Acc')
+    plt.title('Model Accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    # Loss plot
+    plt.subplot(1, 2, 2)
+    plt.plot(history.history['loss'], label='Train Loss')
+    plt.plot(history.history['val_loss'], label='Val Loss')
+    plt.title('Model Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
 
 
 #======================= Model Construction =========================
@@ -58,8 +81,6 @@ def build_model():
     model = Model(inputs, outputs, name='mnist_classifier')
     model.summary()
     return model
-
-
 
 
 #======================= Entry Point =========================
