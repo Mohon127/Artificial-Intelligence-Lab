@@ -15,3 +15,6 @@ step-3:
 verify using this
       ls ~/.keras/datasets/
 
+
+
+Youtube video:       https://www.youtube.com/watch?v=JyhyEaMC8kQ&t=10s
