@@ -80,13 +80,7 @@ def main():
     (X_train, y_train), (X_val, y_val) = split_train_val(train_X, train_Y, val_ratio=0.15)
 
     model = build_model()
-    model.summary(show_trainable=True)
-
-    for layer in model.layers[-9:-6]:
-        layer.trainable = False
     
-    model.summary(show_trainable=True)
-
     opt = tf.keras.optimizers.Adagrad(learning_rate=0.003)
     model.compile(optimizer=opt, loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
