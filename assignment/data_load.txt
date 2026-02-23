@@ -1,0 +1,17 @@
+Generally Mnist, Fashion_mnist, Cifar10 all these datasets are cached 
+into the hidden folder : ~/.keras/datasets 
+
+If not cached:
+step-1:
+Create the folder( if not exist)
+      mkdir -p ~/.keras/datasets 
+
+step-2:
+Copy the mnist.npz file into the folder
+      cp /path/to/mnist.npz ~/.keras/datasets/
+
+
+step-3:
+verify using this
+      ls ~/.keras/datasets/
+
