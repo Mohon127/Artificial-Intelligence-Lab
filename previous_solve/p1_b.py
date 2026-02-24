@@ -28,12 +28,14 @@ def poly_func(x):
 def generate_data(n_samples=2000):
     X = np.linspace(-15, 15, n_samples)
     np.random.shuffle(X)
+    # Normalize input range [-15,15] → [-1,1]
+    X_norm = X / 15.0
+    
     # np.random.seed(42) 
     # X = np.random.uniform(-15, 16, n_samples)
     y = poly_func(X)
 
-    # Normalize input range [-15,15] → [-1,1]
-    X_norm = X / 15.0
+    
     return X_norm, y
 
 # -----------------------------
