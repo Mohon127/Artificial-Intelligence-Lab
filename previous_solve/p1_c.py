@@ -16,10 +16,12 @@ def poly_func(x):
 def generate_data(n_samples=2000):
     X = np.linspace(-20, 20, n_samples)
     np.random.shuffle(X)
-    y = poly_func(X)
-
     # Normalize input range [-20,20] → [-1,1]
     X_norm = X / 20.0
+    
+    y = poly_func(X)
+
+    
     return X_norm, y
 
 # -----------------------------
